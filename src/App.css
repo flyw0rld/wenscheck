@@ -71,6 +71,10 @@
   margin: 10px 5px;
 }
 
+.button.selected {
+  background-color: #787878;
+}
+
 .page-button {
   margin-top: 20px;
 }
