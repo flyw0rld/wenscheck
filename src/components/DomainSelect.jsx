@@ -7,7 +7,7 @@ const DomainButton = ({domain, selected, onClick}) => {
 }
 
 const DomainSelect = ({domain, setDomain}) => {
-  return <div className='domain-select'>
+  return <div className='option-group'>
     Domain: 
     <DomainButton domain={"ETHW"} selected={domain === "ETHW"} onClick={setDomain}/>
     <DomainButton domain={"AWSB"} selected={domain === "AWSB"} onClick={setDomain}/>

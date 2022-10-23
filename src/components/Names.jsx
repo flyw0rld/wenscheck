@@ -7,8 +7,8 @@ function Name({name, domain}) {
   return <a className={`name ${color}`} href="https://wens.domains/" target="_blank">{name}.{domain.toLowerCase()}</a>
 }
 
-function Names({unit, size, domain}) {
-  const {next, names, goNextPage, goPreviousPage} = usePage(unit, size)
+function Names({digits, size, domain}) {
+  const {next, names, goNextPage, goPreviousPage} = usePage(digits, size)
   return <><div className="names">
       {names.map(n => <Name key={n} name={n} domain={domain}/>)}
     </div>
