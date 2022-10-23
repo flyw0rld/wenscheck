@@ -7,14 +7,14 @@ function Name({name, domain}) {
   return <a className={`name ${color}`} href="https://wens.domains/" target="_blank">{name}.{domain.toLowerCase()}</a>
 }
 
-function Names({digits, size, domain}) {
-  const {next, names, goNextPage, goPreviousPage} = usePage(digits, size)
+function Names({digits, size, domain, type}) {
+  const {next, names, goNextPage, goPreviousPage} = usePage(digits, size, type)
   return <><div className="names">
       {names.map(n => <Name key={n} name={n} domain={domain}/>)}
     </div>
     <div className="page-button">
       <button className="button" onClick={goPreviousPage}>{"<"}</button>
-      <button className="button" onClick={next && goNextPage}>{">"}</button>
+      <button className="button" onClick={next ?  goNextPage : undefined}>{">"}</button>
     </div>
   </>
 }

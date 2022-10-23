@@ -1,28 +1,26 @@
 import { useCallback, useEffect, useState } from "react"
+import { get4k, get5k } from "../utils/numbers"
 import * as _ from "lodash"
 
-const generateNames = (digits, start, size) => {
+const generateNames = (digits, page, size, type = 'NONE') => {
   const names = []
+  let all = []
   let next = false
   if(digits === 4) {
-    for(let i = start; i < Math.min(start + size, 10000); i++) {
-      names.push(_.padStart(i.toString(), digits, "0"))
-    }
-    if(start + size < 9999) {
-      next = true
-    }
+    all = get4k(type)
   } else if (digits === 5) {
-    for(let i = start; i < Math.min(start + size, 100000); i++) {
-      names.push(_.padStart(i.toString(), digits, "0"))
-    }
-    if(start + size < 99999) {
-      next = true
-    }
+    all = get5k(type)
+  }
+  const start = page * size;
+  const end = Math.min(all.length, page * size + size)
+  names.push(...all.slice(start, end))
+  if(end < all.length) {
+    next = true
   }
   return {names, next}
 }
 
-const usePage = (digits, size) => {
+const usePage = (digits, size, type) => {
   const [next, setNext] = useState(false)
   const [names, setNames] = useState([])
   const [page, setPage] = useState(0)
@@ -37,10 +35,14 @@ const usePage = (digits, size) => {
   })
 
   useEffect(() => {
-    const {names, next} = generateNames(digits, page * size, size)
+    setPage(0)
+  }, [digits, type])
+
+  useEffect(() => {
+    const {names, next} = generateNames(digits, page, size, type)
     setNames(names)
     setNext(next)
-  }, [page, digits])
+  }, [page, digits, type])
 
   return {next, names, goNextPage, goPreviousPage}
 }
