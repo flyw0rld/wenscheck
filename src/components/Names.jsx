@@ -4,7 +4,7 @@ import usePage from "../hooks/usePage"
 function Name({name, domain}) {
   const nameStatus = useAvailableName(name, domain)
   const color = nameStatus === "AVAILABLE" ? "available" : nameStatus === "LOADING" ? "loading" : "not-available"
-  return <a className={`name ${color}`} href={`https://wens.domains/?search=${name}`} target="_blank">{name}.{domain.toLowerCase()}</a>
+  return <a className={`name ${color}`} href={`https://app.wens.domains/?name=${name}`} target="_blank">{name}.{domain.toLowerCase()}</a>
 }
 
 function Names({digits, size, domain, type}) {
