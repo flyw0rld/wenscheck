@@ -1,5 +1,5 @@
 import { range, padStart } from "lodash";
-import {FEMALE_NAMES, MALE_NAMES} from "./names.js";
+import {ANIMAL_NAMES, FEMALE_NAMES, MALE_NAMES} from "./names.js";
 
 
 export const categories = {
@@ -7,6 +7,7 @@ export const categories = {
     fourD: '4D',
     fiveD: '5D',
     name: 'NAME',
+    animal: 'ANIMAL',
 }
 
 export const getFilters = (type) => {
@@ -132,6 +133,10 @@ export const getFilters = (type) => {
             'FEMALE': (item) => FEMALE_NAMES.includes(item),
             'MALE': (item) => MALE_NAMES.includes(item),
         }
+    } else if(type === categories.animal) {
+        return {
+            'NONE': () => true,
+        }
     }
 }
 
@@ -151,5 +156,7 @@ export const getAllNumbers = (category, filter) => {
             .filter(getFilter(category, filter))
     } else if(category === categories.name) {
         return ([].concat(MALE_NAMES).concat(FEMALE_NAMES)).filter(getFilter(category, filter))
+    } else if(category === categories.animal) {
+        return ANIMAL_NAMES
     }
 }
