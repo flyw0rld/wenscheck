@@ -1,3 +1,5 @@
+import {useEffect, useMemo} from "react";
+import {getFilters} from "../utils/numbers.js";
 
 const PatternButton = ({pattern, selected, onClick}) => {
   return <button onClick={() => onClick(pattern)}
@@ -6,22 +8,23 @@ const PatternButton = ({pattern, selected, onClick}) => {
     </button>
 }
 
-const PatternSelect = ({pattern, setPattern}) => {
+const PatternSelect = ({pattern, category, setPattern}) => {
+
+  const filters = useMemo(() => {
+    return Object.keys(getFilters(category) || {})
+  }, [category]);
+
+  useEffect(() => {
+    setPattern(filters?.[0])
+  }, [category, filters])
+
   return <div className='option-group'> 
-    Pattern: 
-    <PatternButton pattern={"NONE"} selected={pattern === "NONE"} onClick={setPattern}/>
-    <PatternButton pattern={"000X"} selected={pattern === "000X"} onClick={setPattern}/>
-    <PatternButton pattern={"X000"} selected={pattern === "X000"} onClick={setPattern}/>
-    <PatternButton pattern={"00XX"} selected={pattern === "00XX"} onClick={setPattern}/>
-    <PatternButton pattern={"XX00"} selected={pattern === "XX00"} onClick={setPattern}/>
-    <PatternButton pattern={"AAAB"} selected={pattern === "AAAB"} onClick={setPattern}/>
-    <PatternButton pattern={"AABA"} selected={pattern === "AABA"} onClick={setPattern}/>
-    <PatternButton pattern={"AABB"} selected={pattern === "AABB"} onClick={setPattern}/>
-    <PatternButton pattern={"ABAB"} selected={pattern === "ABAB"} onClick={setPattern}/>
-    <PatternButton pattern={"ABBA"} selected={pattern === "ABBA"} onClick={setPattern}/>
-    <PatternButton pattern={"ABBB"} selected={pattern === "ABBB"} onClick={setPattern}/>
-    <PatternButton pattern={"AAAA"} selected={pattern === "AAAA"} onClick={setPattern}/>
-    <PatternButton pattern={"DCBA"} selected={pattern === "DCBA"} onClick={setPattern}/>
+    Pattern:
+    {
+      filters.map((filter) => {
+        return <PatternButton pattern={filter} key={filter} selected={pattern === filter} onClick={setPattern}/>
+      })
+    }
   </div>
 }
 

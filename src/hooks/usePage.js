@@ -1,29 +1,24 @@
 import { useCallback, useEffect, useState } from "react"
-import { get4k, get5k } from "../utils/numbers"
-import * as _ from "lodash"
+import { getAllNumbers} from "../utils/numbers"
 
-const generateNames = (digits, page, size, type = 'NONE') => {
+const generateNames = (category, page, size, type = 'NONE') => {
   const names = []
-  let all = []
   let next = false
-  if(digits === 4) {
-    all = get4k(type)
-  } else if (digits === 5) {
-    all = get5k(type)
-  }
+  const all = getAllNumbers(category, type)
   const start = page * size;
   const end = Math.min(all.length, page * size + size)
   names.push(...all.slice(start, end))
   if(end < all.length) {
     next = true
   }
-  return {names, next}
+  return {names, next, total: all.length}
 }
 
 const usePage = (digits, size, type) => {
   const [next, setNext] = useState(false)
   const [names, setNames] = useState([])
   const [page, setPage] = useState(0)
+  const [total, setTotal] = useState(0)
   const goNextPage = useCallback(() => {
     setNext(false)
     setPage(page + 1)
@@ -39,12 +34,13 @@ const usePage = (digits, size, type) => {
   }, [digits, type])
 
   useEffect(() => {
-    const {names, next} = generateNames(digits, page, size, type)
+    const {names, next, total} = generateNames(digits, page, size, type)
     setNames(names)
     setNext(next)
+    setTotal(total)
   }, [page, digits, type])
 
-  return {next, names, goNextPage, goPreviousPage}
+  return {next, names, page, goNextPage, goPreviousPage, total}
 }
 
 export default usePage
