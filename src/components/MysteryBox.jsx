@@ -3,7 +3,7 @@ import usePage from "../hooks/useBoxPage.js"
 
 function Name({name}) {
   const nameStatus = useCheckOwner(name)
-  const color = nameStatus === "AVAILABLE" ? "available" : nameStatus === "LOADING" ? "loading" : "rewarded"
+  const color = nameStatus === "AVAILABLE" ? "available" : nameStatus === "LOADING" ? "loading" : "not-available"
   return <a className={`name ${color}`} title={color} href={`https://wens.domains/?search=${name}`} target="_blank">{name}.ethw</a>
 }
 
