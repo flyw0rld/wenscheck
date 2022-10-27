@@ -1,5 +1,3 @@
-import {categories} from "../utils/numbers.js";
-
 const UnitButton = ({digits, selected, onClick}) => {
   return <button onClick={() => onClick(digits)}
     className={`button digits-button ${selected && "selected"}`}>
@@ -7,10 +5,9 @@ const UnitButton = ({digits, selected, onClick}) => {
     </button>
 }
 
-const DigitsSelect = ({digits, setDigits}) => {
+const DigitsSelect = ({digits, setDigits, categories}) => {
   return <div className='option-group'>
     Digits:
-
     {Object.keys(categories).map((category) => {
       return <UnitButton digits={categories[category]} key={category} selected={digits === categories[category]} onClick={setDigits}/>
     })}

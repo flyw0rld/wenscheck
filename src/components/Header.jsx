@@ -1,6 +1,9 @@
-function Header() {
+function Header({children}) {
   return <div className="header">
-    <span className="logo"></span><span className="title">WENS AVAILABILITY CHECK</span>
+   <div>
+     <span className="logo"></span><span className="title">WENS ASSISTANT</span>
+   </div>
+    {children}
   </div>
 }
 
