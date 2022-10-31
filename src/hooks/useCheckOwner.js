@@ -33,10 +33,12 @@ const controllerContract = new ethers.Contract(address, [{
 
 const useCheckOwner = (name) => {
   const [status, setStatus] = useState("LOADING")
+  const [addr, setAddr] = useState(null)
   useEffect(() => {
     setStatus("LOADING")
     const tokenId = getTokenId(name)
     controllerContract.ownerOf(tokenId).then(r => {
+      setAddr(r)
       if(r === '0x2928A445D4a76cb0811c952ef85d2d39F7c79414') {
         setStatus("AVAILABLE")
       } else {
@@ -45,7 +47,7 @@ const useCheckOwner = (name) => {
     })
   }, [name])
 
-  return status
+  return [status, addr]
 }
 export default useCheckOwner
 

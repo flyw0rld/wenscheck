@@ -1,10 +1,22 @@
 import useCheckOwner from "../hooks/useCheckOwner.js"
 import usePage from "../hooks/useBoxPage.js"
 
+export const truncateAddress = (address) => {
+  if (!address) return "No Account";
+  const match = address.match(
+      /^(0x[a-zA-Z0-9]{2})[a-zA-Z0-9]+([a-zA-Z0-9]{2})$/
+  );
+  if (!match) return address;
+  return `${match[1]}…${match[2]}`;
+};
+
 function Name({name}) {
-  const nameStatus = useCheckOwner(name)
+  const [nameStatus, addr] = useCheckOwner(name)
   const color = nameStatus === "AVAILABLE" ? "available" : nameStatus === "LOADING" ? "loading" : "not-available"
-  return <a className={`name ${color}`} title={color} href={`https://wens.domains/?search=${name}`} target="_blank">{name}.ethw</a>
+  return <span className={`name ${color}`} title={color} >
+    {name}.ethw
+    {nameStatus === 'NOT_AVAILABLE' && <a className="addr" href={`https://www.oklink.com/zh-cn/ethw/address/${addr}`}  target="_blank">当前持有人 {truncateAddress(addr)}</a>}
+  </span>
 }
 
 function Box({digits, size, domain}) {

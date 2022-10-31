@@ -40,8 +40,21 @@
   border-radius: 12px;
   justify-content: center;
   align-items: center;
+  position: relative;
   width: 130px;
   height: 35px;
+
+}
+
+
+.name .addr {
+  position: absolute;
+  bottom: 0;
+  font-size: 10px;
+  line-height: 1;
+  left: 0;
+  right: 0;
+  text-align: center;
 }
 
 .name:hover {
