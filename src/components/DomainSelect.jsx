@@ -14,6 +14,7 @@ const DomainSelect = ({domain, setDomain}) => {
     <DomainButton domain={"WENS"} selected={domain === "WENS"} onClick={setDomain}/>
     <DomainButton domain={"POW"} selected={domain === "POW"} onClick={setDomain}/>
     <DomainButton domain={"APE"} selected={domain === "APE"} onClick={setDomain}/>
+    <DomainButton domain={"TWIT"} selected={domain === "TWIT"} onClick={setDomain}/>
   </div>
 }
 
