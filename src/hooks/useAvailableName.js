@@ -2,7 +2,7 @@ import { ethers } from "ethers"
 import { useEffect, useState } from "react"
 
 
-const registrars = {
+export const registrars = {
   ETHW: '0x9feb3ab8a40B620B68A112EA0f82C6cF06B5c6fB',
   AWSB: '0x9e32b72f8c8C97D1C2FAB030Ad83b65a74516A80',
   WENS: '0xe857F2661DF1398d416528DAb80557d10F3664Db',

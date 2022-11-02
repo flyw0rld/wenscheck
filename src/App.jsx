@@ -6,13 +6,16 @@ import DomainSelect from "./components/DomainSelect"
 import DigitsSelect from "./components/DigitsSelect"
 import PatternSelect from "./components/PatternSelect"
 import AppSelect from "./components/AppSelect.jsx"
+import "antd/dist/antd.css"
 import './App.css'
 import { categories } from "./utils/numbers.js";
 import { categories as boxCategories} from "./utils/mysterybox.js";
+import {Badge, message} from "antd";
+import copy from 'copy-to-clipboard';
 
 function App() {
   const [app, setApp] = useState("Search")
-  const [domain, setDomain] = useState("ETHW")
+  const [domain, setDomain] = useState("TWIT")
   const [digits, setDigits] = useState(categories.fourD)
   const [boxDigits, setBoxDigits] = useState(boxCategories.oneD)
   const [pattern, setPattern] = useState("NONE")
@@ -36,6 +39,16 @@ function App() {
             <MysteryBox digits={boxDigits} size={100} />
         </>
      }
+     <div className="donation-placeholder">
+       <div className="donation">
+           Donation <Badge dot>
+           <a onClick={() => {
+               copy('0xD784c2B6FB72e755D40c576cD63CB073D91bCcfA')
+               message.success('copy success')
+           }}>0xD784c2B6FB72e755D40c576cD63CB073D91bCcfA</a>
+       </Badge>
+       </div>
+     </div>
     </div>
   )
 }

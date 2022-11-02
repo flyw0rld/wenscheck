@@ -29,6 +29,10 @@ const usePage = (digits, size, type) => {
     setPage(Math.max(page - 1, 0))
   })
 
+  const goToPage = useCallback((pageNumber) => {
+    setPage(pageNumber)
+  })
+
   useEffect(() => {
     setPage(0)
   }, [digits, type])
@@ -40,7 +44,7 @@ const usePage = (digits, size, type) => {
     setTotal(total)
   }, [page, digits, type])
 
-  return {next, names, page, goNextPage, goPreviousPage, total}
+  return {next, names, page, goNextPage, goPreviousPage, goToPage, total}
 }
 
 export default usePage

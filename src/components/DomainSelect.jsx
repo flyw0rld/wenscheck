@@ -1,4 +1,4 @@
-
+import { Radio } from 'antd'
 const DomainButton = ({domain, selected, onClick}) => {
   return <button onClick={() => onClick(domain)}
     className={`button domain-button ${selected && "selected"}`}>
@@ -8,13 +8,15 @@ const DomainButton = ({domain, selected, onClick}) => {
 
 const DomainSelect = ({domain, setDomain}) => {
   return <div className='option-group'>
-    Domain: 
-    <DomainButton domain={"ETHW"} selected={domain === "ETHW"} onClick={setDomain}/>
-    <DomainButton domain={"AWSB"} selected={domain === "AWSB"} onClick={setDomain}/>
-    <DomainButton domain={"WENS"} selected={domain === "WENS"} onClick={setDomain}/>
-    <DomainButton domain={"POW"} selected={domain === "POW"} onClick={setDomain}/>
-    <DomainButton domain={"APE"} selected={domain === "APE"} onClick={setDomain}/>
-    <DomainButton domain={"TWIT"} selected={domain === "TWIT"} onClick={setDomain}/>
+    Domain：
+    <Radio.Group value={domain} onChange={e => setDomain(e.target.value)}>
+      <Radio.Button value="TWIT">TWIT</Radio.Button>
+      <Radio.Button value="ETHW">ETHW</Radio.Button>
+      <Radio.Button value="AWSB">AWSB</Radio.Button>
+      <Radio.Button value="WENS">WENS</Radio.Button>
+      <Radio.Button value="POW">POW</Radio.Button>
+      <Radio.Button value="APE">APE</Radio.Button>
+    </Radio.Group>
   </div>
 }
 
