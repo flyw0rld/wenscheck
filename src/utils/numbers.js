@@ -45,6 +45,19 @@ export const getFilters = (type) => {
     if(type === categories.fourD) {
         return {
             'NONE': () => true,
+            'AAAA': (item) => {
+                return item[0] == item[1] && item[0] == item[2] && item[0] == item[3]
+            },
+            'ABCD': (item) => {
+                return parseInt(item[0])+1 == parseInt(item[1]) &&
+                    parseInt(item[1])+1 == parseInt(item[2]) &&
+                    parseInt(item[2])+1 == parseInt(item[3])
+            },
+            'DCBA': (item) => {
+                return parseInt(item[1])+1 == parseInt(item[0]) &&
+                    parseInt(item[2])+1 == parseInt(item[1]) &&
+                    parseInt(item[3])+1 == parseInt(item[2])
+            },
             '000X': (item) => {
                 return item[0] == 0 && item[1] == 0 && item[2] == 0
             },
@@ -60,6 +73,9 @@ export const getFilters = (type) => {
             'AAAB': (item) => {
                 return item[0] == item[1] && item[0] == item[2]
             },
+            'ABBB': (item) => {
+                return item[1] == item[2] && item[2] == item[3]
+            },
             'AABA': (item) => {
                 return item[0] == item[1] && item[0] == item[3]
             },
@@ -72,46 +88,10 @@ export const getFilters = (type) => {
             'ABBA': (item) => {
                 return item[0] == item[3] && item[1] == item[2]
             },
-            'ABBB': (item) => {
-                return item[1] == item[2] && item[2] == item[3]
-            },
-            'AAAA': (item) => {
-                return item[0] == item[1] && item[0] == item[2] && item[0] == item[3]
-            },
-            'ABCD': (item) => {
-                return parseInt(item[0])+1 == parseInt(item[1]) &&
-                    parseInt(item[1])+1 == parseInt(item[2]) &&
-                    parseInt(item[2])+1 == parseInt(item[3])
-            },
-            'DCBA': (item) => {
-                return parseInt(item[1])+1 == parseInt(item[0]) &&
-                    parseInt(item[2])+1 == parseInt(item[1]) &&
-                    parseInt(item[3])+1 == parseInt(item[2])
-            }
         }
     } else if(type === categories.fiveD) {
         return {
             'NONE': () => true,
-            '000XX': (item) => {
-                return item[0] == 0 && item[1] == 0 && item[2] == 0
-            },
-            'XX000': (item) => {
-                return item[2] == 0 && item[3] == 0 && item[4] == 0
-            },
-            'ABABA': (item) => {
-                return item[1] == item[3] && item[0] == item[4] && item[0] == item[2]
-            },
-            'ABBBA': (item) => {
-                return item[1] == item[2] && item[2] == item[3] && item[0] == item[4]
-            },
-            'ABBBB': (item) => {
-                return item[1] == item[2] && item[2] == item[3] && item[3] == item[4]
-            },
-            'XABCD': (item) => {
-                return parseInt(item[1])+1 == parseInt(item[2]) &&
-                    parseInt(item[2])+1 == parseInt(item[3]) &&
-                    parseInt(item[3])+1 == parseInt(item[4])
-            },
             'AAAAA': (item) => {
                 return item[0] == item[1] && item[0] == item[2] && item[0] == item[3] && item[0] == item[4]
             },
@@ -126,7 +106,27 @@ export const getFilters = (type) => {
                     parseInt(item[2])+1 == parseInt(item[1]) &&
                     parseInt(item[3])+1 == parseInt(item[2]) &&
                     parseInt(item[4])+1 == parseInt(item[3])
-            }
+            },
+            'XABCD': (item) => {
+                return parseInt(item[1])+1 == parseInt(item[2]) &&
+                    parseInt(item[2])+1 == parseInt(item[3]) &&
+                    parseInt(item[3])+1 == parseInt(item[4])
+            },
+            '000XX': (item) => {
+                return item[0] == 0 && item[1] == 0 && item[2] == 0
+            },
+            'XX000': (item) => {
+                return item[2] == 0 && item[3] == 0 && item[4] == 0
+            },
+            'ABBBA': (item) => {
+                return item[1] == item[2] && item[2] == item[3] && item[0] == item[4]
+            },
+            'ABBBB': (item) => {
+                return item[1] == item[2] && item[2] == item[3] && item[3] == item[4]
+            },
+            'ABABA': (item) => {
+                return item[1] == item[3] && item[0] == item[4] && item[0] == item[2]
+            },
         }
     } else if(type === categories.name) {
         return {
