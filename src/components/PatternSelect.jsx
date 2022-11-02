@@ -15,6 +15,12 @@ const PatternSelect = ({pattern, category, setPattern}) => {
     return Object.keys(getFilters(category) || {})
   }, [category]);
 
+  useEffect(() => {
+    if(!filters.includes(pattern)) {
+      setPattern(filters?.[0])
+    }
+  }, [filters])
+
   return <div className='option-group'>
     Pattern：
     <Radio.Group value={pattern} onChange={e => setPattern(e.target.value)}>
