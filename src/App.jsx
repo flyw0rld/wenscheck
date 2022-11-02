@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import {useMemo, useState} from 'react'
 import Names from "./components/Names"
 import MysteryBox from "./components/MysteryBox.jsx"
 import Header from "./components/Header"
@@ -13,6 +13,7 @@ import { categories as boxCategories} from "./utils/mysterybox.js";
 import { useQuery } from "./hooks/useQuery.js";
 import {Badge, message} from "antd";
 import copy from 'copy-to-clipboard';
+import {omit} from "lodash";
 
 export const getCheckedParam = (
         options,
@@ -74,7 +75,11 @@ function App() {
     })
   }
 
-  return (
+  const digitCategories = useMemo(() => {
+      return domain==='TWIT' ? omit(categories, ['animal','name']) : categories
+  }, [domain]);
+
+    return (
     <div className="App">
       <Header>
         <AppSelect app={app} setApp={handleSetApp}/>
@@ -82,7 +87,7 @@ function App() {
       {
         app ==='Search' && <>
             <DomainSelect domain={domain} setDomain={handleSetDomain}/>
-            <DigitsSelect digits={digits} setDigits={handleSetDigits} categories={categories}/>
+            <DigitsSelect domain={domain} digits={digits} setDigits={handleSetDigits} categories={digitCategories}/>
             <PatternSelect pattern={pattern} category={digits} setPattern={handleSetPattern}/>
             <Names digits={digits} size={100} domain={domain} type={pattern} />
         </>
