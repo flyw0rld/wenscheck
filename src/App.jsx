@@ -10,26 +10,80 @@ import "antd/dist/antd.css"
 import './App.css'
 import { categories } from "./utils/numbers.js";
 import { categories as boxCategories} from "./utils/mysterybox.js";
+import { useQuery } from "./hooks/useQuery.js";
 import {Badge, message} from "antd";
 import copy from 'copy-to-clipboard';
 
+export const getCheckedParam = (
+        options,
+    param,
+    ) => {
+    const isValid = Array.isArray(options)
+        ? options.includes(param)
+        : options(param)
+    return isValid ? param : null
+}
+
 function App() {
-  const [app, setApp] = useState("Search")
-  const [domain, setDomain] = useState("TWIT")
-  const [digits, setDigits] = useState(categories.fourD)
-  const [boxDigits, setBoxDigits] = useState(boxCategories.oneD)
-  const [pattern, setPattern] = useState("NONE")
+  const {replace, get} = useQuery()
+  const [app, setApp] = useState(
+      getCheckedParam(
+          ["Search", "MysteryBox"],
+          get('app')
+      ) ||
+      "Search")
+  const [domain, setDomain] = useState(get('domain') || "TWIT" )
+  const [digits, setDigits] = useState(
+      getCheckedParam(
+          Object.keys(categories).map(item => categories[item]),
+          get('digit')
+      ) || categories.fourD
+  )
+    const [pattern, setPattern] = useState(get('pattern') || "NONE")
+    const [boxDigits, setBoxDigits] = useState(boxCategories.oneD)
+
+  const handleSetApp = (value) => {
+    setApp(value)
+    replace({
+        app:value,
+        page:0
+    })
+  }
+
+  const handleSetDomain = (value) => {
+    setDomain(value)
+    replace({
+        domain:value,
+        page:0
+    })
+  }
+
+  const handleSetDigits = (value) => {
+    setDigits(value)
+    replace({
+        digit:value,
+        page:0
+    })
+  }
+
+  const handleSetPattern = (value) => {
+      setPattern(value)
+    replace({
+        pattern:value,
+        page:0
+    })
+  }
 
   return (
     <div className="App">
       <Header>
-        <AppSelect app={app} setApp={setApp}/>
+        <AppSelect app={app} setApp={handleSetApp}/>
       </Header>
       {
         app ==='Search' && <>
-            <DomainSelect domain={domain} setDomain={setDomain}/>
-            <DigitsSelect digits={digits} setDigits={setDigits} categories={categories}/>
-            <PatternSelect pattern={pattern} category={digits} setPattern={setPattern}/>
+            <DomainSelect domain={domain} setDomain={handleSetDomain}/>
+            <DigitsSelect digits={digits} setDigits={handleSetDigits} categories={categories}/>
+            <PatternSelect pattern={pattern} category={digits} setPattern={handleSetPattern}/>
             <Names digits={digits} size={100} domain={domain} type={pattern} />
         </>
       }

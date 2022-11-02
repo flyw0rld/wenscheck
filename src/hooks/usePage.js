@@ -1,5 +1,6 @@
 import { useCallback, useEffect, useState } from "react"
 import { getAllNumbers} from "../utils/numbers"
+import {useQuery} from "./useQuery.js";
 
 const generateNames = (category, page, size, type = 'NONE') => {
   const names = []
@@ -15,10 +16,21 @@ const generateNames = (category, page, size, type = 'NONE') => {
 }
 
 const usePage = (digits, size, type) => {
+
+  const {replace, get} = useQuery()
+
+  const page = parseInt(get('page') || 0)
+
   const [next, setNext] = useState(false)
   const [names, setNames] = useState([])
-  const [page, setPage] = useState(0)
   const [total, setTotal] = useState(0)
+
+  const setPage = (number) => {
+    replace({
+      page: number
+    })
+  }
+
   const goNextPage = useCallback(() => {
     setNext(false)
     setPage(page + 1)
@@ -32,10 +44,6 @@ const usePage = (digits, size, type) => {
   const goToPage = useCallback((pageNumber) => {
     setPage(pageNumber)
   })
-
-  useEffect(() => {
-    setPage(0)
-  }, [digits, type])
 
   useEffect(() => {
     const {names, next, total} = generateNames(digits, page, size, type)

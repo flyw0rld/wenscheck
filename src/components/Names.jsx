@@ -4,6 +4,7 @@ import usePage from "../hooks/usePage"
 import { Pagination, Spin } from 'antd';
 import {keccak256} from "js-sha3";
 import {BigNumber} from "ethers";
+import {useQuery} from "../hooks/useQuery.js";
 
 function getTokenId(name) {
   const namenode = '0x'+keccak256(`${name}`)
@@ -22,7 +23,6 @@ function Name({name, domain}) {
   const tokenId = getTokenId(name)
   const nft = (registrars[domain]).toLowerCase()
   const link = isAvailable ? `https://app.wens.domains/${path}?name=${name}` : isNotAvailable ? `https://nuwton.io/asset/EthereumPow/${nft}/${tokenId}` : '#';
-  console.log(link);
   return <Spin spinning={nameStatus === "LOADING"} indicator={antIcon}>
     <a className={`name ${color}`} href={link} target="_blank">
       {name}.{domain.toLowerCase()}
