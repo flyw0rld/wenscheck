@@ -1,7 +1,7 @@
 import useAvailableName, { registrars } from "../hooks/useAvailableName"
 import { LoadingOutlined } from '@ant-design/icons';
 import usePage from "../hooks/usePage"
-import { Pagination, Spin } from 'antd';
+import {Pagination, Spin, Tooltip} from 'antd';
 import {keccak256} from "js-sha3";
 import {BigNumber} from "ethers";
 import {useQuery} from "../hooks/useQuery.js";
@@ -23,11 +23,13 @@ function Name({name, domain}) {
   const tokenId = getTokenId(name)
   const nft = (registrars[domain]).toLowerCase()
   const link = isAvailable ? `https://app.wens.domains/${path}?name=${name}` : isNotAvailable ? `https://nuwton.io/asset/EthereumPow/${nft}/${tokenId}` : '#';
+  const title = isAvailable ? 'Go To Register' : isNotAvailable ? 'Go to Nuwton' : 'Loading'
   return <Spin spinning={nameStatus === "LOADING"} indicator={antIcon}>
-    <a className={`name ${color}`} href={link} target="_blank">
-      {name}.{domain.toLowerCase()}
-      {isNotAvailable && <span className="addr">Go to Nuwton</span>}
-    </a>
+    <Tooltip placement="bottomLeft" title={title}>
+      <a className={`name ${color}`} href={link} target="_blank">
+        {name}.{domain.toLowerCase()}
+      </a>
+    </Tooltip>
   </Spin>
 }
 
